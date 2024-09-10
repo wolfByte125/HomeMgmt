@@ -6,6 +6,7 @@ using HomeMgmt.Models.UserModels;
 using HomeMgmt.Services.AuthServices;
 using HomeMgmt.Services.UserAccountService;
 using HomeMgmt.Services.UserRoleServices;
+using HomeMgmtTest.Controllers;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Data.Sqlite;
@@ -163,73 +164,43 @@ namespace HomeMgmtTest.ServiceTests
             }
         }
 
-        //[Fact]
-        //public void ReadUserAccounts_ShouldReturnUserAccounts()
-        //{
-        //    var connection = new SqliteConnection("DataSource=:memory:");
-        //    connection.Open();
-
-        //    var options = new DbContextOptionsBuilder<DataContext>()
-        //        .UseSqlite(connection)
-        //        .Options;
-
-        //    // MOCK DATA FOR TESTING
-        //    using (var context = new DataContext(options))
-        //    {
-        //        context.Database.EnsureCreated();
-
-        //        byte[] passwordSalt;
-        //        byte[] passwordHash;
+        [Fact]
+        public void ReadUserAccountById_Mocked()
+        {
+            // ARRANGE
+            byte[] passwordSalt;
+            byte[] passwordHash;
 
 
-        //        using (var hmac = new HMACSHA512())
-        //        {
-        //            passwordSalt = hmac.Key;
-        //            passwordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes("12345678"));
-        //        }
+            using (var hmac = new HMACSHA512())
+            {
+                passwordSalt = hmac.Key;
+                passwordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes("12345678"));
+            }
 
-        //        context.UserAccounts.AddRange(
-        //            new UserAccount()
-        //            {
-        //                Id = "d80f0b50-f48c-48e1-b495-21d8c4e168d8",
-        //                FirstName = "John",
-        //                MiddleName = "B",
-        //                LastName = "Doe",
-        //                Username = "bytr",
-        //                PasswordSalt = passwordSalt,
-        //                PasswordHash = passwordHash
-        //            },
-        //            new UserAccount()
-        //            {
-        //                Id = "d80f0b50-f48c-48e1-b495-21d8c4e168d9",
-        //                FirstName = "Jane",
-        //                MiddleName = "B",
-        //                LastName = "Doe",
-        //                Username = "wlfy",
-        //                PasswordSalt = passwordSalt,
-        //                PasswordHash = passwordHash
-        //            });
+            var userAccount = new UserAccount()
+            {
+                Id = "d80f0b50-f48c-48e1-b495-21d8c4e168d8",
+                FirstName = "John",
+                MiddleName = "B",
+                LastName = "Doe",
+                Username = "bytr",
+                PasswordSalt = passwordSalt,
+                PasswordHash = passwordHash
+            };
 
-        //        context.SaveChanges();
-        //    }
+            var mock = new Mock<IUserAccountService>();
+            mock.Setup(x => x.ReadUserAccountById(userAccount.Id)).ReturnsAsync(userAccount);
 
-        //    using (var context = new DataContext(options))
-        //    {
-        //        context.Database.EnsureCreated();
+            var controller = new UserAccountTestController(mock.Object);
+            
+            // ACT
+            var actual = controller.ReadUserAccountById(userAccount.Id);
 
-        //        var serviceProvider = new ServiceCollection()
-        //            .AddScoped<DataContext>(_ => context)
-        //            .AddScoped<IMapper>(_ => Mock.Of<IMapper>())
-        //            .AddScoped<IAuthService>(_ => Mock.Of<IAuthService>())
-        //            .BuildServiceProvider();
-
-        //        var userAccountService = ActivatorUtilities.CreateInstance<UserAccountService>(serviceProvider);
-
-        //        var userAccounts = userAccountService.ReadUserAccounts(queryDTO: new QueryDTO() { PageNumber = 1} , filterDTO: new FilterUserAccountDTO());
-
-        //        Assert.Equal(1, userAccounts.Result.Pages);
-        //        Assert.Equal(2, userAccounts.Result.TotalData);
-        //    }
-        //}
+            // ASSERT
+            Assert.Same(userAccount, actual.Result);
+            Assert.Equal(userAccount.Id, actual.Result.Id);
+            Assert.Equal(userAccount.FirstName, actual.Result.FirstName);
+        }
     }
 }

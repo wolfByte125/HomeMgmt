@@ -2,6 +2,13 @@ using HomeMgmt.Contexts;
 using HomeMgmt;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
+using Backend.Services.SeederService;
+using Swashbuckle.AspNetCore.SwaggerUI;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +26,33 @@ builder.Services.AddCors(options =>
                       });
 });
 
+builder.Services.AddSwaggerGen(options =>
+{
+    options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
+    {
+        Description = "Standard Authorization header using the Bearer scheme (\"bearer {token}\")",
+        In = ParameterLocation.Header,
+        Name = "Authorization",
+        Type = SecuritySchemeType.ApiKey,
+
+    });
+
+    options.OperationFilter<SecurityRequirementsOperationFilter>();
+});
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8
+                .GetBytes(builder.Configuration.GetSection("AppSettings:Token").Value)),
+            ValidateIssuer = false,
+            ValidateAudience = false,
+            SaveSigninToken = true
+        };
+    });
 
 // Add DB
 builder.Services.AddDbContext<DataContext>(options =>
@@ -56,14 +90,17 @@ using (var scope = app.Services.CreateScope())
     var serviceProvider = scope.ServiceProvider;
     var context = serviceProvider.GetRequiredService<DataContext>();
     context.Database.Migrate();
-    //serviceProvider.GetRequiredService<SeederService>().SeedDB();
+    serviceProvider.GetRequiredService<SeederService>().SeedDB();
 }
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(c =>
+    {
+        c.DocExpansion(DocExpansion.None);
+    });
 }
 
 app.UseHttpsRedirection();

@@ -1,7 +1,7 @@
 ﻿using HomeMgmt.DTOs.NotificationDTOs;
 using HomeMgmt.Models.NotificationModels;
 
-namespace Backend.Services.NotificationServices
+namespace HomeMgmt.Services.NotificationServices
 {
     public interface INotificationService
     {
