@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using HomeMgmt.Contexts;
+using HomeMgmt.DTOs.HomeDTOs;
 using HomeMgmt.DTOs.UserDTOs.UserAccountDTOs;
 using HomeMgmt.DTOs.UserDTOs.UserRoleDTOs;
+using HomeMgmt.Models.GeneralModels;
 using HomeMgmt.Models.UserModels;
 
 namespace HomeMgmt.Utils
@@ -32,6 +34,9 @@ namespace HomeMgmt.Utils
             CreateMap<BanUserAccountDTO, BannedAccount>();
 
             #endregion
+
+            // HOME
+            CreateMap<CreateHomeDTO, Home>();
         }
     }
 }

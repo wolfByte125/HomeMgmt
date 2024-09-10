@@ -1,8 +1,10 @@
 ﻿using Backend.Services.SeederService;
 using FluentValidation;
 using HomeMgmt.Helpers.ValidatorServices;
+using HomeMgmt.Models.GeneralModels;
 using HomeMgmt.Models.UserModels;
 using HomeMgmt.Services.AuthServices;
+using HomeMgmt.Services.HomeServices;
 using HomeMgmt.Services.NotificationServices;
 using HomeMgmt.Services.UserAccountService;
 using HomeMgmt.Services.UserRoleServices;
@@ -27,6 +29,7 @@ namespace HomeMgmt
             // VALIDATORS
             services.AddScoped<IValidator<UserAccount>, UserAccountValidator>();
             services.AddScoped<IValidator<UserRole>, UserRoleValidator>();
+            services.AddScoped<IValidator<Home>, HomeValidator>();
 
             // SERVICES
             services.AddScoped<SeederService>();
@@ -38,6 +41,8 @@ namespace HomeMgmt
             services.AddScoped<IUserRoleService, UserRoleService>();
 
             services.AddScoped<INotificationService, NotificationService>();
+
+            services.AddScoped<IHomeService, HomeService>();
         }
     }
 }

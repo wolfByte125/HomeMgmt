@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using FluentValidation.Results;
+using HomeMgmt.Models.GeneralModels;
 using HomeMgmt.Models.UserModels;
 
 namespace HomeMgmt.Helpers.ValidatorServices
@@ -8,14 +9,17 @@ namespace HomeMgmt.Helpers.ValidatorServices
     {
         private readonly IValidator<UserAccount> _userAccountValidator;
         private readonly IValidator<UserRole> _userRoleValidator;
+        private readonly IValidator<Home> _homeValidator;
 
         public ValidatorService
             (
                 IValidator<UserAccount> userAccountValidator,
-                IValidator<UserRole> userRoleValidator
+                IValidator<UserRole> userRoleValidator,
+                IValidator<Home> homeValidator
             )
         {
             _userRoleValidator = userRoleValidator;
+            _homeValidator = homeValidator;
             _userAccountValidator = userAccountValidator;
         }
 
@@ -30,6 +34,14 @@ namespace HomeMgmt.Helpers.ValidatorServices
         public void Validate(UserRole userRole)
         {
             ValidationResult result = _userRoleValidator.Validate(userRole);
+
+            if (!result.IsValid)
+                throw new InvalidOperationException($"Validation Failed: {ParseValidationError(errors: result.Errors)}");
+        }
+
+        public void Validate(Home home)
+        {
+            ValidationResult result = _homeValidator.Validate(home);
 
             if (!result.IsValid)
                 throw new InvalidOperationException($"Validation Failed: {ParseValidationError(errors: result.Errors)}");

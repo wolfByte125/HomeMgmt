@@ -1,4 +1,5 @@
-﻿using HomeMgmt.Models.UserModels;
+﻿using HomeMgmt.Models.GeneralModels;
+using HomeMgmt.Models.UserModels;
 
 namespace HomeMgmt.Helpers.ValidatorServices
 {
@@ -6,5 +7,6 @@ namespace HomeMgmt.Helpers.ValidatorServices
     {
         void Validate(UserAccount userAccount);
         void Validate(UserRole userRole);
+        void Validate(Home home);
     }
 }

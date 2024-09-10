@@ -39,4 +39,10 @@
         public const string SUPER_ADMIN = "Super Admin";
         public const string DEFAULT_ROLE = "Default Role";
     }
+
+    public class CATEGORY_TYPES
+    {
+        public const string ITEM = "Item";
+        public const string BILL = "Bill";
+    }
 }
