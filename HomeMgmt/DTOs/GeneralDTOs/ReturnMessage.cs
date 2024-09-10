@@ -7,7 +7,7 @@
 
         public static ReturnMessage Parse(string message)
         {
-            return new ReturnMessage() { Message = message};
+            return new ReturnMessage() { Message = message };
 
         }          
         public static ReturnMessage Parse(string message, bool confirmRequired)

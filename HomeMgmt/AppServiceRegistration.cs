@@ -1,5 +1,6 @@
 ﻿using Backend.Services.SeederService;
 using FluentValidation;
+using HomeMgmt.Helpers.ValidatorServices;
 using HomeMgmt.Models.UserModels;
 using HomeMgmt.Services.AuthServices;
 using HomeMgmt.Services.NotificationServices;
@@ -20,8 +21,12 @@ namespace HomeMgmt
                 options.AddPolicy(AUTHORIZATION.EXCLUDE_INACTIVE, policy => policy.AddRequirements(new CustomRoleRequirement()));
             });
 
+            // HELPER SERVICES
+            services.AddScoped<IValidatorService, ValidatorService>();
+
             // VALIDATORS
             services.AddScoped<IValidator<UserAccount>, UserAccountValidator>();
+            services.AddScoped<IValidator<UserRole>, UserRoleValidator>();
 
             // SERVICES
             services.AddScoped<SeederService>();

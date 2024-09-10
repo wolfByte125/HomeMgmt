@@ -1,8 +1,8 @@
 ﻿using FluentValidation;
-using FluentValidation.Results;
 using HomeMgmt.DTOs.AuthDTOs.LoginDTOs;
 using HomeMgmt.DTOs.AuthDTOs.PasswordDTOs;
 using HomeMgmt.DTOs.UserDTOs.UserAccountDTOs;
+using HomeMgmt.Helpers.ValidatorServices;
 using HomeMgmt.Models.UserModels;
 using HomeMgmt.Services.AuthServices;
 using HomeMgmt.Utils;
@@ -16,12 +16,12 @@ namespace HomeMgmt.Controllers.UserControllers
     public class AuthController : ControllerBase
     {
         private readonly IAuthService _authService;
-        private readonly IValidator<UserAccount> _userAccountValidator;
+        private readonly IValidatorService _validatorService;
 
-        public AuthController(IAuthService authService, IValidator<UserAccount> userAccountValidator)
+        public AuthController(IAuthService authService, IValidatorService validatorService)
         {
             _authService = authService;
-            _userAccountValidator = userAccountValidator;
+            _validatorService = validatorService;
         }
 
         [HttpGet("check/token"), Authorize]
@@ -58,7 +58,7 @@ namespace HomeMgmt.Controllers.UserControllers
         {
             try
             {
-                ValidationResult result = await _userAccountValidator.ValidateAsync(new UserAccount()
+                _validatorService.Validate(new UserAccount()
                 {
                     Username = registerDTO.Username,
                     FirstName = registerDTO.FirstName,
@@ -69,12 +69,7 @@ namespace HomeMgmt.Controllers.UserControllers
                     Password = registerDTO.Password
                 });
 
-                if (result.IsValid)
-                {
-                    return Ok(await _authService.RegisterUserAccount(registerDTO));
-                }
-
-                return BadRequest(result.Errors);
+                return Ok(await _authService.RegisterUserAccount(registerDTO));
             }
             catch (Exception ex)
             {

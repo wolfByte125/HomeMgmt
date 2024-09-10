@@ -1,5 +1,6 @@
 ﻿using HomeMgmt.DTOs.GeneralDTOs;
 using HomeMgmt.DTOs.UserDTOs.UserRoleDTOs;
+using HomeMgmt.Helpers.ValidatorServices;
 using HomeMgmt.Models.UserModels;
 using HomeMgmt.Services.UserRoleServices;
 using HomeMgmt.Utils;
@@ -14,10 +15,12 @@ namespace Backend.Controllers.UserControllers
     public class UserRoleController : ControllerBase
     {
         private readonly IUserRoleService _userRoleService;
+        private readonly IValidatorService _validatorService;
 
-        public UserRoleController(IUserRoleService userRoleService)
+        public UserRoleController(IUserRoleService userRoleService, IValidatorService validatorService)
         {
             _userRoleService = userRoleService;
+            _validatorService = validatorService;
         }
 
         [HttpPost]
@@ -25,6 +28,11 @@ namespace Backend.Controllers.UserControllers
         {
             try
             {
+                _validatorService.Validate(new UserRole()
+                {
+                    RoleName = userRoleDTO.RoleName
+                });
+
                 return Ok(await _userRoleService.CreateUserRole(userRoleDTO: userRoleDTO));
             }
             catch (Exception ex)
