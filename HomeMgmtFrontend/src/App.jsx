@@ -1,14 +1,14 @@
 import "./App.css";
 import Dashboard from "./pages/Dashboard";
 import Login from "./pages/Login";
+import UsersList from "./pages/UsersList";
 
 function App() {
   return (
     <>
-      <div>
-        <Login />
-        {/* <Dashboard /> */}
-      </div>
+      {/* <Login /> */}
+      {/* <Dashboard /> */}
+      <UsersList />
     </>
   );
 }

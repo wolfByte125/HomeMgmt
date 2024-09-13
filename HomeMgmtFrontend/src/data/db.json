@@ -1,0 +1,44 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "Alice Johnson",
+      "email": "alice.johnson@example.com"
+    },
+    {
+      "id": 2,
+      "name": "Michael Smith",
+      "email": "michael.smith@example.com"
+    },
+    {
+      "id": 3,
+      "name": "Sara Williams",
+      "email": "sara.williams@example.com"
+    },
+    {
+      "id": 4,
+      "name": "Abebe Williams",
+      "email": "asdsa"
+    },
+    {
+      "id": 5,
+      "name": "Almaz",
+      "email": "Ayana"
+    },
+    {
+      "id": 6,
+      "name": "Abebe",
+      "email": "Balcha"
+    },
+    {
+      "id": 7,
+      "name": "Kebede",
+      "email": "Alkebedem"
+    },
+    {
+      "id": 8,
+      "name": "Elizabeth",
+      "email": "Tigistu"
+    }
+  ]
+}
