@@ -1,4 +1,6 @@
-﻿using HomeMgmt.Models.NotificationModels;
+﻿using HomeMgmt.Models.GeneralModels;
+using HomeMgmt.Models.NotificationModels;
+using HomeMgmt.Models.StockModels;
 using HomeMgmt.Models.UserModels;
 using HomeMgmt.Utils;
 using Microsoft.EntityFrameworkCore;
@@ -28,6 +30,13 @@ namespace HomeMgmt.Contexts
         public DbSet<Notification> Notifications { get; set; }
 
         #endregion
+
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<Home> Homes { get; set; }
+        public DbSet<Unit> Units { get; set; }
+        public DbSet<Item> Items { get; set; }
+        public DbSet<Stock> Stocks { get; set; }
+
 
         // OVERRIDE SAVE CHANGES ASYNC TO ADD AND UPDATE TIMESTAMPS
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)

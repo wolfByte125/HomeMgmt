@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Client;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace Backend.Services.NotificationServices
+namespace HomeMgmt.Services.NotificationServices
 {
     public class NotificationService : INotificationService
     {

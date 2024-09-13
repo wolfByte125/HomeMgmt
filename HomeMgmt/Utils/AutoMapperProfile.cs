@@ -1,5 +1,10 @@
 ﻿using AutoMapper;
 using HomeMgmt.Contexts;
+using HomeMgmt.DTOs.HomeDTOs;
+using HomeMgmt.DTOs.UserDTOs.UserAccountDTOs;
+using HomeMgmt.DTOs.UserDTOs.UserRoleDTOs;
+using HomeMgmt.Models.GeneralModels;
+using HomeMgmt.Models.UserModels;
 
 namespace HomeMgmt.Utils
 {
@@ -14,7 +19,24 @@ namespace HomeMgmt.Utils
 
         public AutoMapperProfile()
         {
-            // MAPPER PROFILES
+            #region USER RELATED
+
+            // USER ACCOUNT
+            CreateMap<RegisterUserAccountDTO, UserAccount>();
+            CreateMap<UpdateUserAccountDTO, UserAccount>();
+
+            // USER ROLE
+            CreateMap<CreateUserRoleDTO, UserRole>();
+            CreateMap<UserRole, UserRole>();
+            CreateMap<Permissions, Permissions>();
+
+            // BAN USER ACCOUNT
+            CreateMap<BanUserAccountDTO, BannedAccount>();
+
+            #endregion
+
+            // HOME
+            CreateMap<CreateHomeDTO, Home>();
         }
     }
 }
