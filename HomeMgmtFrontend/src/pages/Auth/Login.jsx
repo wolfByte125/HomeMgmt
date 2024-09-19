@@ -1,5 +1,5 @@
 import React from "react";
-import loginImg from "../assets/images/login.jpg";
+import loginImg from "../../assets/images/login.jpg";
 import { Box, TextField, Button, Typography } from "@mui/material";
 
 const Login = () => {

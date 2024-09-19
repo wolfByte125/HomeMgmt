@@ -4,7 +4,7 @@ import App from "./App.jsx";
 import "./index.css";
 
 import { ApiProvider } from "@reduxjs/toolkit/query/react";
-import { apiSlice } from "./features/api/userSlice.js";
+import { apiSlice } from "./features/api/apiSlice.js";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
