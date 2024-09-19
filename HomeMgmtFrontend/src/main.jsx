@@ -1,10 +1,15 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import App from './App.jsx'
-import './index.css'
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import App from "./App.jsx";
+import "./index.css";
 
-createRoot(document.getElementById('root')).render(
+import { ApiProvider } from "@reduxjs/toolkit/query/react";
+import { apiSlice } from "./features/api/userSlice.js";
+
+createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <App />
-  </StrictMode>,
-)
+    <ApiProvider api={apiSlice}>
+      <App />
+    </ApiProvider>
+  </StrictMode>
+);
