@@ -1,43 +1,44 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { BASE_URL, ENDPOINTS } from "../../constants/apiConstants";
+import { BASE_URL, API_TAGS } from "../../constants/apiConstants";
 
 export const apiSlice = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
-  tagTypes: ["Users"],
+  tagTypes: [API_TAGS.USER_ACCOUNTS],
   endpoints: (builder) => ({
     // USER ENDPOINTS
 
     getUsers: builder.query({
-      query: () => ENDPOINTS.GET_USERS,
-      transformResponse: (res) => res.sort((a, b) => b.id - a.id),
-      providesTags: ["Users"],
+      query: () => "userAccount",
+      method: "GET",
+      // transformResponse: (res) => res.sort((a, b) => b.id - a.id),
+      providesTags: [API_TAGS.USER_ACCOUNTS],
     }),
 
     createUser: builder.mutation({
       query: (newUser) => ({
-        url: ENDPOINTS.ADD_USER,
+        url: "userAccount",
         method: "POST",
         body: newUser,
       }),
-      invalidatesTags: ["Users"],
+      invalidatesTags: [API_TAGS.USER_ACCOUNTS],
     }),
 
     updateUser: builder.mutation({
       query: (user) => ({
-        url: ENDPOINTS.UPDATE_USER + user.id,
-        method: "PATCH",
+        url: "userAccount",
+        method: "PUT",
         body: user,
       }),
-      invalidatesTags: ["Users"],
+      invalidatesTags: [API_TAGS.USER_ACCOUNTS],
     }),
 
     deleteUser: builder.mutation({
-      query: ({ id }) => ({
-        url: ENDPOINTS.DELETE_USER + id,
+      query: (id) => ({
+        url: `userAccount/${id}`,
         method: "DELETE",
       }),
-      invalidatesTags: ["Users"],
+      invalidatesTags: [API_TAGS.USER_ACCOUNTS],
     }),
 
     //OTHER ENDPOINTS

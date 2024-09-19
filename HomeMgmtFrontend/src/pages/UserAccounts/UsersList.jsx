@@ -16,7 +16,7 @@ import {
   useCreateUserMutation,
   useUpdateUserMutation,
   useDeleteUserMutation,
-} from "../features/api/userSlice";
+} from "../../features/api/apiSlice";
 
 const UsersList = () => {
   const [users, setUsers] = useState([]);
@@ -48,7 +48,7 @@ const UsersList = () => {
   }
 
   if (isError) {
-    return <p>Error: {error.message}</p>;
+    return <p>Error : {error.message}</p>;
   }
 
   const handleOpenDialog = (user) => {

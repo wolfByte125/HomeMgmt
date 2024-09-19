@@ -14,7 +14,7 @@ import billImg from "../assets/images/bill.jpg"; // Example image for Bill Manag
 import plansImg from "../assets/images/plan.jpg"; // Example image for Plans Management
 import usersImg from "../assets/images/users.jpg"; // Example image for User Management
 import reportsImg from "../assets/images/report.jpg"; // Example image for Reports & Analytics
-import Sidebar from "./Sidebar";
+import Sidebar from "../components/layouts/Sidebar";
 
 const Dashboard = () => {
   return (

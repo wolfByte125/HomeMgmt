@@ -1,7 +1,7 @@
 import "./App.css";
 import Dashboard from "./pages/Dashboard";
-import Login from "./pages/Login";
-import UsersList from "./pages/UsersList";
+import Login from "./pages/Auth/Login";
+import UsersList from "./pages/UserAccounts/UsersList";
 
 function App() {
   return (
